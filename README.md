@@ -1,10 +1,10 @@
 # Fan Adapter Generator
 
 
-![](fan-adapter_lgup.png)
-![](fan-adapter_smup.png)
-![](fan-adapter_lgup_2.png)
-![](fan-adapter_smup_2.png)
+![](fan_adapter_lgup.png)
+![](fan_adapter_smup.png)
+![](fan_adapter_lgup_2.png)
+![](fan_adapter_smup_2.png)
 
 <!-- STL's for printing are in [releases](../../releases)  -->
 <!-- [thingiverse](https://www.thingiverse.com/thing:_____) -->
