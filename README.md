@@ -59,8 +59,8 @@ If any screw head pockets will be formed, this sets the thickness of material un
 If **\*\_flange_thickness** is greater, the screw heads will have **\*\_flange_thickness** material under them.  
 If **\*\_flange_thickness** is less, the screw heads will have **minimum_screw_flange_thickness** material under them.  
 
-**tl**
-Transition/tunnel length.
+**tl**  
+Transition/tunnel length.  
 ```(large_fan_size-small_fan_size)/2``` by default to make a 45 degree funnel.  
 May be anything over 1 to make a thinner or thicker adapter. 
 
