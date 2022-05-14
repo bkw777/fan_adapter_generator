@@ -13,7 +13,7 @@ All dimensions in mm.
 **small_fan_size**  
 **large_fan_size**  
 Any standard fan size from 20 to 250.  
-Or may also use any arbitrary size if you supply **\*\_screw_size** and **\*\_bolt_pattern**, and possibly adjust **cowl_thickness**.  
+Or may also use any arbitrary size if you supply **\*\_screw_size** and **\*\_bolt_pattern**, and possibly adjust **cowling_thickness**.  
 This is the outside dimension of the entire fan frame body.
 
 ### Optional  
@@ -59,11 +59,21 @@ If any screw head pockets will be formed, this sets the thickness of material un
 If **\*\_flange_thickness** is greater, the screw heads will have **\*\_flange_thickness** material under them.  
 If **\*\_flange_thickness** is less, the screw heads will have **minimum_screw_flange_thickness** material under them.  
 
+**tl**
+Transition/tunnel length.
+```(large_fan_size-small_fan_size)/2``` by default to make a 45 degree funnel.  
+May be anything over 1 to make a thinner or thicker adapter. 
+
+**xoffset**  
+**yoffset**  
+Move the small flange off-center.  
+Eample: ```xoffset=tl``` ( tl=(large-small)/2 ) to make both flanges flush on one side
+
 **fbp()**  
 Table of all recognized fan sizes and their assosciated bolt patterns.  
 
 ## Printing notes
-Both the internal cone/funnel shape and the external pyramid shape are 45 degrees, and so generally do not require any supports unless you manually change "tl" (tunnel/transition length) to a smaller value making a shallower cone angle.
+Both the internal cone/funnel shape and the external pyramid shape are 45 degrees, and so generally do not require any supports.
 
 Printing with the large side down works slightly better.
 
