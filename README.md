@@ -13,7 +13,7 @@ All dimensions in mm.
 **small_fan_size**  
 **large_fan_size**  
 Any standard fan size from 20 to 250.  
-Or may also use any arbirary size if you supply **\*\_screw_size** and **\*\_bolt_pattern**, and possibly adjust **cowl_thickness**.  
+Or may also use any arbitrary size if you supply **\*\_screw_size** and **\*\_bolt_pattern**, and possibly adjust **cowl_thickness**.  
 This is the outside dimension of the entire fan frame body.
 
 ### Optional  
