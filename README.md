@@ -2,54 +2,70 @@
 OpenSCAD model to generate adapters between any 2 standard computer fan sizes.  
 ![](fan_adapter_lgup.png)
 ![](fan_adapter_smup.png)
-![](fan_adapter_lgup_2.png)
-![](fan_adapter_smup_2.png)
 
 <!-- STL's for printing are in [releases](../../releases)  -->
 <!-- [thingiverse](https://www.thingiverse.com/thing:_____) -->
 
 ## Settings
+All dimensions in mm.
 
+### Required
 **small_fan_size**  
 **large_fan_size**  
 One of the following standard fan sizes  
 ```20, 25, 30, 35, 38, 40, 45, 50, 60, 70, 80, 92, 120, 135, 140, 150, 160, 176, 180, 200, 205, 225, 230, 250```
 
-The rest of the settings are optional.
+### Optional  
+The rest of these settings have reasonable defaults or automatic values, and these are manual overrides to customize the adapter more.
 
-**small_mount_hole_size**  
-**large_mount_hole_size**  
-Nominal fastener size like 3 or 4 for M3 or M4 etc, not the exact hole diameter. The actual hole diameter may be smaller, or exact, or larger, depending on **\*\_mount_hole_type** below.  
-```auto or -1``` automatically determined from the fan size  
-```none or 0``` do not make any screw holes  
+**small_bolt_pattern**  
+**large_bolt_pattern**  
+Override the bolt pattern spacing.  
+Example: Standard 140mm fan bolt pattern is 125mm, but some 140mm fans have the 120mm fan bolt pattern, 105mm.  
+If you have one of those, specify 105 here to override getting 125 automatically.  
+```auto or -1``` Automatically determined from the fan size.
+
+**small_screw_size**  
+**large_screw_size**  
+Fastener size like 4 for M4 screws, not the exact hole diameter. The actual hole diameter will be smaller or exact or larger, depending on **\*\_mount_hole_type** .  
+```auto or -1``` Automatically determined from the fan size.  
+```none or 0``` Do not make any screw holes.  
 
 **small_mount_hole_type**  
 **large_mount_hole_type**  
-How to interpret **\*\_mount_hole_size** to make the mount holes.  
-```thread or 1``` Holes will be smaller than **\*\_mount_hole_size** so that the screw cuts threads into the plastic. Example, if the nominal screw size is "M3" aka 3mm, the hole will be 2.8mm so that an M3 screw cuts threads into the plastic.  
-```exact or 2``` Holes will be exactly **\*\_mount_hole_size**. Not usually what you want, but the option exists as a manual override for odd screw sizes or threaded inserts etc.  
-```pass or 3``` - Holes will be larger than **\*\_mount_hole_size** so that the screw passes through the hole.
+How to interpret **\*\_screw_size** to get the actual hole diameter to drill.  
+```thread or 1``` Holes will be smaller than **\*\_screw_size** so that the screw cuts threads into the material, and screw head pockets are disabled (just the narrow hole is drilled all the way through the part).  
+```exact or 2``` Holes will be exactly **\*\_screw_size**. Not usually what you want. This is a way to manually override and specify an arbitrary size hole exactly.  
+```through or 3``` Holes will be larger than **\*\_screw_size** so that the screw passes through the hole.
 
 **small_screw_pocket_diameter**  
 **large_screw_pocket_diameter**  
-Diameter of the pocket for a nut or screw head. Ignored if \*\_mount_hole_type=thread  
+Diameter of the pocket around the screw hole for the screw head. Ignored if \*\_mount_hole_type=thread .  
 ```auto or -1``` 2 x \*\_mount_hole_size  
-```none or 0``` No pocket, same as when \*\_mount_hole_type=thread
+```none or 0``` Disable screw head pockets.
 
 **small_flange_thickness**  
 **large_flange_thickness**  
-Thickness of material under screw head. No effect when there is no pocket.  
-```auto or -1``` use **minimum_screw_flange_thickness**
+Thickness of material under screw head. Only affects holes that have a screw head pocket.  
+```default or -2 or auto or -1``` Use **default_flange_thickness**
 
-**additional_thickness**  
-Add this much thickness to the adapter, beyond the size of the transition cone. Usually you will want this to provide more meat for the mounting screws and to make the part generally stronger.  
-```0``` produces the smallest possible adapter while still maintaining a 45 degree cone transition from large to small. This does not leave a lot of material around the screw holes.  
-```2``` for smaller sizes to ```4``` for larger sizes is a reasonable default if you don't need the slimmest possible adapter.
+**default_flange_thickness**  
+Thickness of both flanges.  
+```auto or -1``` Use **minimum_screw_flange_thickness**  
+```0``` No extra flage thickness on the faces. This is the smallest possible adapter (while still maintaining a 45 degree transition funnel), but does not leave a lot of material around the screw holes. Possibly more useful with no screw holes and use glue instead.  
+```1``` to ```4``` depending on fan sizes are reasonable values if you don't need the slimmest possible adapter. This provides more material around the screw holes and makes the part stronger.  
 
-**minimum_screw_flange_thickness**
-Minimum thickness of material under the screw heads regardless of other settings.  
+**minimum_screw_flange_thickness**  
+If any screw head pockets will be formed, this sets the thickness of material under the screw heads.  
+If **\*\_flange_thickness** is greater, the screw heads will have **\*\_flange_thickness** material under them.  
+If **\*\_flange_thickness** is less, the screw heads will have **minimum_screw_flange_thickness** material under them.  
 
 **fbp()**  
-Table of all recognized fan sizes and their assosciated bolt pattern spacing. If you want to add a new fan, here is where you add it.
+Table of all recognized fan sizes and their assosciated bolt patterns.  
 
-Both the internal cone/funnel shape and the external pyramid shape are 45 degrees, and generally do not require any supports to print. Printing large face down works slightly better.
+## Printing notes
+Both the internal cone/funnel shape and the external pyramid shape are 45 degrees, and so generally do not require any supports unless you manually change "tl" (tunnel/transition length) to a smaller value making a shallower cone angle.
+
+Printing with the large side down works slightly better.
+
+If screw head pockets are enabled, the upside down pockets come out slightly messy but not enough to matter functionally, and not enough to be worth adding supports.
