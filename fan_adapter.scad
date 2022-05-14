@@ -10,15 +10,6 @@ thread = 1+0;
 exact = 2+0;
 through = 3+0;
 
-// *_mount_hole_size: nominal screw size, ex: 4 for M4 etc, not the exact diameter of the hole
-//   auto = automatic based on fan size
-//   none = no screw holes
-//   
-// *_mount_hole_type modifies *_mount_hole_size
-//   exact = holes will be exactly *_mount_hole_size diameter
-//   thread = holes will be smaller than *_mount_hole_size for screw to cut threads into material, and *_screw_pocket_diameter will be ignored, no screw head pockets will be added
-//   through = holes will be larger than *_mount_hole_size to allow screw to pass through
-
 // To make settings visible in thingiverse customizer,
 // use numbers instead of variables/enums below.
 // Example: foo=-1; instead of foo=auto;
