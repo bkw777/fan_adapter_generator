@@ -59,15 +59,15 @@ If any screw head pockets will be formed, this sets the thickness of material un
 If **\*\_flange_thickness** is greater, the screw heads will have **\*\_flange_thickness** material under them.  
 If **\*\_flange_thickness** is less, the screw heads will have **minimum_screw_flange_thickness** material under them.  
 
-**tl**  
-Transition/tunnel length.  
-```(large_fan_size-small_fan_size)/2``` by default to make a 45 degree funnel.  
+**tunnel_length**  
+Transition/tunnel length. The distance between the two flanges, not including the flanges.  
+```auto or -1``` Automatic length to create a 45 degree transition funnel.
 May be anything over 1 to make a thinner or thicker adapter. 
 
 **xoffset**  
 **yoffset**  
 Move the small flange off-center.  
-Eample: ```xoffset=tl``` ( tl=(large-small)/2 ) to make both flanges flush on one side
+Eample: ```xoffset=tl``` is a handy way to make both flanges flush on one side. (tl is the automatic calculated version of tunnel_length = (large_fan_size-small_fan_size)/2 )
 
 **fbp()**  
 Table of all recognized fan sizes and their assosciated bolt patterns.  

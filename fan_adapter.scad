@@ -26,22 +26,22 @@ through = 3+0;
 // Fan size, which is the outside dimension of the square frame. Usually specify a standard fan size here like "40" or "120". You may specify an arbitrary/non-standard size, in which case you also need to manually supply *_bolt_pattern, and may also want to change cowling_thickness.
 small_fan_size = 40;
 // Override bolt pattern spacing: -1=auto
-small_bolt_pattern = -1; //auto
+small_bolt_pattern = -1;
 // Override screw hole diameter: -1=auto, 0=none
-small_screw_size = -1; //auto;
+small_screw_size = -1;
 // Override screw hole type: 1=thread 2=exact 3=through : 1/thread = make hole smaller than *_screw_size to cut threads into material, and disable screw head pocket. 2/exact = make hole exactly *_screw_size diameter, use for arbitrary manual control. 3/through = make hole larger than *_screw_size so screw passes through.
-small_mount_hole_type = 3; //through;
+small_mount_hole_type = 3;
 // Override screw pocket diameter: -1=auto, no effect when _type=thread as pockets are disabled
-small_screw_pocket_diameter = -1; //auto;
+small_screw_pocket_diameter = -1;
 // Override flange thickness: -1=default
-small_flange_thickness = -1; //default;
+small_flange_thickness = -1;
 
 large_fan_size = 60;
-large_bolt_pattern = -1; //auto
-large_screw_size = -1; //auto;
-large_mount_hole_type = 3; //through;
-large_screw_pocket_diameter = -1; //auto;
-large_flange_thickness = -1; //default;
+large_bolt_pattern = -1;
+large_screw_size = -1;
+large_mount_hole_type = 3;
+large_screw_pocket_diameter = -1;
+large_flange_thickness = -1;
 
 // default flange thickness
 default_flange_thickness = 2;
@@ -49,8 +49,9 @@ default_flange_thickness = 2;
 // For any holes with a screw head pocket enabled, minumum thickness of material under screw heads, regardless of other settings
 minimum_screw_flange_thickness = 2;
 
-// transition/tunnel length - makes a 45 degree funnel regardless what the fan sizes are
-tl = (large_fan_size - small_fan_size) / 2;
+// transition/tunnel length: -1=auto makes a 45 degree funnel regardless what the fan sizes are
+tunnel_length = -1;
+tl = tunnel_length > auto ? tunnel_length : (large_fan_size - small_fan_size) / 2;
 
 // move the small side off-center - hint: "tl" (a variable you can't see in the thingiverse customizer: (large_fan_size-small_fan_size)/2 ) makes the 2 flanges exactly flush on one side (unless you changed tl too).
 xoffset = 0;
