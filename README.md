@@ -12,8 +12,9 @@ All dimensions in mm.
 ### Required
 **small_fan_size**  
 **large_fan_size**  
-One of the following standard fan sizes  
-```20, 25, 30, 35, 38, 40, 45, 50, 60, 70, 80, 92, 120, 135, 140, 150, 160, 176, 180, 200, 205, 225, 230, 250```
+Any standard fan size from 20 to 250.  
+Or may also use any arbirary size if you supply **\*\_screw_size** and **\*\_bolt_pattern**, and possibly adjust **cowl_thickness**.  
+This is the outside dimension of the entire fan frame body.
 
 ### Optional  
 The rest of these settings have reasonable defaults or automatic values, and these are manual overrides to customize the adapter more.
@@ -21,13 +22,11 @@ The rest of these settings have reasonable defaults or automatic values, and the
 **small_bolt_pattern**  
 **large_bolt_pattern**  
 Override the bolt pattern spacing.  
-Example: Standard 140mm fan bolt pattern is 125mm, but some 140mm fans have the 120mm fan bolt pattern, 105mm.  
-If you have one of those, specify 105 here to override getting 125 automatically.  
 ```auto or -1``` Automatically determined from the fan size.
 
 **small_screw_size**  
 **large_screw_size**  
-Fastener size like 4 for M4 screws, not the exact hole diameter. The actual hole diameter will be smaller or exact or larger, depending on **\*\_mount_hole_type** .  
+Fastener size, ex: 4 for M4 screws, not the exact hole diameter. The actual hole diameter will be smaller or exact or larger, depending on **\*\_mount_hole_type** .  
 ```auto or -1``` Automatically determined from the fan size.  
 ```none or 0``` Do not make any screw holes.  
 
