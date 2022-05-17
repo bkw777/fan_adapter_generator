@@ -218,19 +218,10 @@ difference() {
 //////////////////////////////////////////////////////////////////////////////////
 
 // 4 cylinders
-module c4 (s,z,d) {
- ts = s/2;
- tz = z/2;
- mirror_copy([0,1,0])
-  translate([0,ts,0])
-   mirror_copy([1,0,0])
-    translate([ts,0,tz])
-     cylinder(h=z,d=d,center=true);
-}
-
-module mirror_copy(v) {
- children();
- mirror(v) children();
+module c4 (s,z,d,center=false) {
+ p = s/2;
+ l = [[-p,-p,0],[-p,p,0],[p,p,0],[p,-p,0]];
+ for(v=l) translate(v) cylinder(h=z,d=d,center=center);
 }
 
 // bore diameter for screw to cut threads
