@@ -19,6 +19,10 @@ This is the outside dimension of the entire fan frame body.
 ### Optional  
 The rest of these settings have reasonable defaults or automatic values, and these are manual overrides to customize the adapter more.
 
+**angle**
+Make an angled adapter with a bent tube between the two flanges. Requires [BOSL2](https://github.com/revarbat/BOSL2). 
+
+```0-360```
 **small_bolt_pattern**  
 **large_bolt_pattern**  
 Override the bolt pattern spacing.  
