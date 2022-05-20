@@ -4,7 +4,7 @@
 // Install BOSL2 library and uncomment to make angled adapters. (angle>0)
 // You can comment this out for a straight adapter. (angle=0)
 // https://github.com/revarbat/BOSL2
-//include <BOSL2/std.scad>;
+include <BOSL2/stdx.scad>;
 
 // +0 is just a trick to hide a variable from the thingiverse customizer
 // fake enums
