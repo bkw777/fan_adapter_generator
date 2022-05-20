@@ -21,7 +21,7 @@ The rest of these settings have reasonable defaults or automatic values, and the
 
 **angle**  
 Make an angled adapter with a bent tube between the two flanges. Requires [BOSL2](https://github.com/revarbat/BOSL2).  
-```0-360``` The two flanges will be angled this man degrees.
+```0-360``` The two flanges will be angled this many degrees.
 
 **small_bolt_pattern**  
 **large_bolt_pattern**  
