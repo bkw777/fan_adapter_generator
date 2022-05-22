@@ -57,6 +57,7 @@ Thickness of both flanges.
 ```auto or -1``` Use **minimum_screw_flange_thickness**  
 ```0``` No extra flage thickness on the faces. This is the smallest possible adapter (while still maintaining a 45 degree transition funnel), but does not leave a lot of material around the screw holes. Possibly more useful with no screw holes and use glue instead.  
 ```1``` to ```4``` depending on fan sizes are reasonable values if you don't need the slimmest possible adapter. This provides more material around the screw holes and makes the part stronger.  
+Default is only 2 because by default the flanges are not flat and have extra material besides this, but for example if you set **tunnel_length=0** you probably should increase this to 3 or 4.
 
 **minimum_screw_flange_thickness**  
 If any screw head pockets will be formed, this sets the thickness of material under the screw heads.  
@@ -65,8 +66,9 @@ If **\*\_flange_thickness** is less, the screw heads will have **minimum_screw_f
 
 **tunnel_length**  
 Transition/tunnel length. The distance between the two flanges, not including the flanges.  
-```auto or -1``` Automatic length to create a 45 degree transition funnel.
-May be anything over 1 to make a thinner or thicker adapter. 
+```auto or -1``` Automatic length to create a 45 degree transition funnel for straight adapter.  
+For straight adapter: This may either lengthen greater than auto, or shorten down to 0.  
+For angled adapter: The disatance is the arc length through the center of the bent tube, and "auto" will be whatever results from arc radius = large fan radius at the given angle, or the straight adapter default tunnel length, whichever is greater. The given distance will only be used if it's larger than whatever "auto" works out to.  
 
 **xoffset**  
 **yoffset**  
@@ -77,8 +79,9 @@ Eample: ```xoffset=tl``` is a handy way to make both flanges flush on one side. 
 Table of all recognized fan sizes and their assosciated bolt patterns.  
 
 ## Printing notes
-Both the internal cone/funnel shape and the external pyramid shape are 45 degrees, and so generally do not require any supports.
+Both the internal cone/funnel shape and the external pyramid shape are 45 degrees, and so generally do not require any supports for straight adapters.  
+Angled adapter with angle>45 will need supports.
 
-Printing with the large side down works slightly better.
+Printing with the large side down works better, both because of the increased bed adhesion area, and because of how the interior circular leaning-in overhang supports itself better similar to how an arch supports itself by resisting compression around the circle, vs an exterior unsupported overhang.
 
-If screw head pockets are enabled, the upside down pockets come out slightly messy but not enough to matter functionally, and not enough to be worth adding supports.
+If screw head pockets are enabled, the upside down pockets come out slightly messy but not enough to matter functionally, and not enough to be worth adding supports and messing up the smoothness of the inside funnel.
