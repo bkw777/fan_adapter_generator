@@ -1,14 +1,13 @@
 // parametric fan size adapter
 // b.kenyon.w@gmail.com CC-BY-SA
 
-// Install BOSL2 library and uncomment to make angled adapters. (angle>0)
-// You can comment this out for a straight adapter. (angle=0)
+// For angled adapters (angle>0), install the BOSL2 library.
+// For straight adapters (angle=0), you can just ignore the "can't open" warning.
 // https://github.com/revarbat/BOSL2
-include <BOSL2/stdx.scad>;
+include <BOSL2/std.scad>;
 
-// +0 is just a trick to hide a variable from the thingiverse customizer
 // fake enums
-default = -2+0;
+default = -2+0; // +0 = trick to hide from thingiverse customizer
 auto = -1+0;
 none = 0+0;
 thread = 1+0;
@@ -19,18 +18,20 @@ through = 3+0;
 // use numbers instead of variables/enums below.
 // Example: foo=-1; instead of foo=auto;
 
-// Fan size, which is the outside dimension of the square frame. Usually specify a standard fan size here like "40" or "120". You may specify an arbitrary/non-standard size, in which case you also need to manually supply *_bolt_pattern, and may also want to change cowling_thickness.
+// Fan size. Outside dimension of the square frame. Usually specify a standard fan size here like "40" or "120". If you want to specify an arbitrary/non-standard size, then you have to supply both *_fan_size and *_bolt_pattern, and may also want to change cowling_thickness or *_inside_diameter, as otherwise the ID will increase with the exterior size. May also want to manually specify *_screw_size, as the automatic screw size will increase at certain threshholds like >40. IE, if you want to use say a 40mm fan, but want the flanges to be 2mm wider, but don't want the ID to be larger, you manually specify, small_fan_size=42, small_inside_diameter=38, small_bolt_pattern=32, small_screw_size=3.
 small_fan_size = 40;
-// Override bolt pattern spacing: -1=auto
+// Override bolt pattern spacing: -1=auto  Default is looked up from a table of standard fan sizes.
 small_bolt_pattern = -1;
-// Override screw hole diameter: -1=auto, 0=none
+// Override screw hole diameter: -1=auto  0=none  Default is looked up from a table of standard fan size ranges.
 small_screw_size = -1;
-// Override screw hole type: 1=thread 2=exact 3=through : 1/thread = make hole smaller than *_screw_size to cut threads into material, and disable screw head pocket. 2/exact = make hole exactly *_screw_size diameter, use for arbitrary manual control. 3/through = make hole larger than *_screw_size so screw passes through.
+// Override screw hole type: 1=thread - hole smaller than *_screw_size for thread-forming, and disable pockets.  2=exact - hole exactly *screw_size for manual control.  3=through - hole larger than *_screw_size for pass-through. Default is through if angle=0 and thread if angle>0, and default is angle=0.
 small_mount_hole_type = -1;
-// Override screw pocket diameter: -1=auto, 0=none, no effect when _type=thread as pockets are disabled
+// Override screw pocket diameter: -1=auto  0=disable  No effect when/where pockets are disabled, ex: _type=thread or angle>0. Default is *_screw_size*2.
 small_screw_pocket_diameter = -1;
-// Override flange thickness: -1=default
+// Override flange thickness: -1=default  Default is default_flange_thickness.
 small_flange_thickness = -1;
+// Override inside diameter: -1=auto  Default is *_fan_size-(cowling_thickness*2)
+small_inside_diameter = -1;
 
 large_fan_size = 60;
 large_bolt_pattern = -1;
@@ -38,27 +39,28 @@ large_screw_size = -1;
 large_mount_hole_type = -1;
 large_screw_pocket_diameter = -1;
 large_flange_thickness = -1;
+large_inside_diameter = -1;
 
-// creates an angled adapter - REQUIRES github.com/revarbat/BOSL2 - NOTE: When making an angled adapter, it usually isn't practical to have screw head pockets, as the pockets would cut into the tube. So this design intentionally adds the tube after cutting the pockets, usually resulting in the the pockets having some intrusion from the tube. You can try it and see if you're ok with what you get. For some size combinations it works ok. But it is suggested to just use *_mount_hole_type=thread when making an angled adapter. *_mount_hole_type=-1 (auto) will use _type=thread when angle>0. For very small angles, you should manually increase tunnel_length so that the flanges seperate.
+// creates an angled adapter - angle>0 requires github.com/revarbat/BOSL2 - Screw head pockets are disabled by default when angle>0. To force enable pockets, override the -1/auto value for *_mount_hole_type, ex: "large_mount_hole_type = through; //-1;" would enable pockets for the large flange, and change the hole dimension from being smaller than nominal (for thread-forming) to being larger than nominal (for pass-through).
 angle = 0;
-// like $fn but just for the main arc of an angled adapter - higher = smoother and slower
+// like $fn but just for the main arc of an angled adapter - higher = smoother surface and longer render time
 fn = 96;
 
-// default flange thickness
+// default flange thickness - if the flanges were flat, this would need to be more like 3 or 4, but they are not flat
 default_flange_thickness = 2;
 
 // For any holes with a screw head pocket enabled, minumum thickness of material under screw heads, regardless of other settings
 minimum_screw_flange_thickness = 2;
 
-// tunnel length: -1=auto   Distance between the two flanges, not including the flanges. For angled adapter, it's arc length through the center of the bent tube. For a straight adapter, auto means whatever length needed to produce a 45 degree funnel. For an angled adapter, auto means arc radius == large fan radius (pivots on the edge of the larger flange, for the smallest possible adapter). For angled adapter, has no effect until you specify a value that's larger than the minimum.
+// tunnel length: -1=auto  Distance between the two flanges, not including the flanges themselves. Default is whatever distance creates a 45 degree cone/funnel between the given fan sizes. For angled adapter, it's the arc length through the center of the bent tube, and may be longer depending on the angle between the flanges, but the minimum arc length is the same as the straght adapter, so that at very shallow angles, the flanges do not come any closer than for a straight adapter. For straight adapter, this may shorten the tunnel to anywhere from default to 0. For angled adapter, this will not shorten less than auto, but may lengthen.
 tunnel_length = -1;
 
-// move the small side off-center - hint: "tl" (a variable you can't see in the thingiverse customizer: (large_fan_size-small_fan_size)/2 ) makes the 2 flanges exactly flush on one side (unless you changed tl too).
+// move the small flange off-center - Only for straight adapters. (large_fan_size-small_fan_size)/2 makes the 2 flanges exactly flush on one side.
 xoffset = 0;
 yoffset = 0;
 
-// Because of the way fan sizes are defined by the frame's outside square dimension not the fan blades diameter, and the inside circle is determined by subtracting from that, you're not really free to modify this much. IE, if you wanted 2mm thick walls, it would just shrink the circle into the fan blades.
-cowling_thickness = 1+0;
+// subtracted (*2) from *_fan_size to determine the default inside diameter
+cowling_thickness = 1;
 
 // given fan size, return bolt pattern
 function fbp(x) =
@@ -109,8 +111,12 @@ $fs = 0.5;
 $fa = 1;
 
 // flange inside diameter
-small_id = small_fan_size - cowling_thickness * 2;
-large_id = large_fan_size - cowling_thickness * 2;
+small_id =
+ small_inside_diameter > auto ? small_inside_diameter :
+ small_fan_size - cowling_thickness * 2;
+large_id =
+ large_inside_diameter > auto ? large_inside_diameter :
+ large_fan_size - cowling_thickness * 2;
 
 // mount hole nominal diameter - M3, M4 etc
 small_mhnd =
@@ -184,9 +190,12 @@ large_sft =
  minimum_screw_flange_thickness ;
 
 // tunnel length - auto 45 degree funnel
-tl = tunnel_length > auto ? tunnel_length : (large_fan_size - small_fan_size) / 2;
- 
-/// OUTPUT //////////////////////////////////////////////////////////////////////////
+def_tl = abs(large_fan_size-small_fan_size)/2;
+tl = tunnel_length > auto ? tunnel_length : def_tl;
+
+//////////////////////////////////////////////////////////////////////////////////
+/// OUTPUT ///////////////////////////////////////////////////////////////////////
+
 if(angle<=0) {
 ///////////////////////////////////////
 ////////   straight adapter   /////////
@@ -217,15 +226,19 @@ if(angle<=0) {
  }
 
 } else {
-
 /////////////////////////////////////
 ////////   angled adapter   /////////
+
  if (small_mhad>small_mhnd) echo("WARNING: Screw head pockets are generally incompatible with an angled adapter. Suggest using small_mount_hole_type=thread to produce a small mount hole that you thread a screw directly into from the fan side.");
  if (large_mhad>large_mhnd) echo("WARNING: Screw head pockets are generally incompatible with an angled adapter. Suggest using large_mount_hole_type=thread to produce a small mount hole that you thread a screw directly into from the fan side.");
 
  difference() {
-  r = max(max(small_fan_size,large_fan_size)/2,tl/(angle*(PI/180))); // radius needed to make arc_length = tl, minimum large_fan/2
-  tb = tl/2;
+  _tl = max(tl,def_tl); // minimum tunnel length def_tl or larger
+  _r = max(small_fan_size,large_fan_size)/2; // minimum arc radius = large fan radius
+  _al = PI * _r * (angle/180); // minimum arc length based on angle & minimum arc radius
+  al = max(_tl,_al); // arc length = larger of minimum tunnel length or minumim arc length
+  r = max(_r,al/(angle*(PI/180))); // radius needed to get desired arc length
+  tb = def_tl/2; // flange back thickness
   union () {
    flange(s=large_fan_size,d=0,t=large_ft,b=large_bp,m=large_mhad,pt=large_sft,pd=large_pd,tb=tb); // large flange
    translate([r,0,large_ft]) rotate([0,angle,0]) translate([-r,0,small_ft]) rotate([180,0,0]) flange(s=small_fan_size,d=0,t=small_ft,b=small_bp,m=small_mhad,pt=small_sft,pd=small_pd,tb=tb); // small flange
@@ -258,8 +271,8 @@ module flange(s=50,d=-1,t=3,b=40,m=3,tb=-1,pt=0,pd=0,center=false) {
  translate([0,0,_z]) {
   difference() {
    hull() {
-    translate([0,0,o/2]) c4(s=b,z=t+o,d=s-b,center=true);
-    if (_tb>0) translate([0,0,-_z+t+_tb]) cylinder(d=s-_tb*2,h=o);
+    translate([0,0,o/2]) c4(s=b,z=t+o,d=s-b,center=true); // main plate
+    if (_tb>0) translate([0,0,-_z+t+_tb]) cylinder(d=s-_tb*2,h=o); // extra back side thickness
    }
    group() {
     if(_d>0) cylinder(h=t+1,d=_d,center=true); // main hole
