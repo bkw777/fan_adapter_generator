@@ -7,39 +7,35 @@
 include <BOSL2/std.scad>;
 
 // fake enums
-default = -2+0; // +0 = trick to hide from thingiverse customizer
-auto = -1+0;
-none = 0+0;
-thread = 1+0;
-exact = 2+0;
-through = 3+0;
-
-// To make settings visible in thingiverse customizer,
-// use numbers instead of variables/enums below.
-// Example: foo=-1; instead of foo=auto;
+default = -2;
+auto = -1;
+none = 0;
+thread = 1;
+exact = 2;
+through = 3;
 
 // Fan size. Outside dimension of the square frame. Usually specify a standard fan size here like "40" or "120". If you want to specify an arbitrary/non-standard size, then you have to supply both *_fan_size and *_bolt_pattern, and may also want to change cowling_thickness or *_inside_diameter, as otherwise the ID will increase with the exterior size. May also want to manually specify *_screw_size, as the automatic screw size will increase at certain threshholds like >40. IE, if you want to use say a 40mm fan, but want the flanges to be 2mm wider, but don't want the ID to be larger, you manually specify, fan_A_size=42, fan_A_inside_diameter=38, fan_A_bolt_pattern=32, fan_A_screw_size=3.
 fan_A_size = 60;
 // Override bolt pattern spacing: -1=auto  Default is looked up from a table of standard fan sizes.
-fan_A_bolt_pattern = -1;
+fan_A_bolt_pattern = auto;
 // Override screw hole diameter: -1=auto  0=none  Default is looked up from a table of standard fan size ranges.
-fan_A_screw_size = -1;
+fan_A_screw_size = auto;
 // Override screw hole type: 1=thread - hole smaller than *_screw_size for thread-forming, and disable pockets.  2=exact - hole exactly *screw_size for manual control.  3=through - hole larger than *_screw_size for pass-through. Default is through if angle=0 and thread if angle>0, and default is angle=0.
-fan_A_mount_hole_type = -1;
+fan_A_mount_hole_type = auto;
 // Override screw pocket diameter: -1=auto  0=disable  No effect when/where pockets are disabled, ex: _type=thread or angle>0. Default is *_screw_size*2.
-fan_A_screw_pocket_diameter = -1;
+fan_A_screw_pocket_diameter = auto;
 // Override flange thickness: -1=default  Default is default_flange_thickness.
-fan_A_flange_thickness = -1;
+fan_A_flange_thickness = default;
 // Override inside diameter: -1=auto  Default is *_fan_size-(cowling_thickness*2)
-fan_A_inside_diameter = -1;
+fan_A_inside_diameter = auto;
 
 fan_B_size = 40;
-fan_B_bolt_pattern = -1;
-fan_B_screw_size = -1;
-fan_B_mount_hole_type = -1;
-fan_B_screw_pocket_diameter = -1;
-fan_B_flange_thickness = -1;
-fan_B_inside_diameter = -1;
+fan_B_bolt_pattern = auto;
+fan_B_screw_size = auto;
+fan_B_mount_hole_type = auto;
+fan_B_screw_pocket_diameter = auto;
+fan_B_flange_thickness = default;
+fan_B_inside_diameter = auto;
 
 // creates an angled adapter - angle>0 requires github.com/revarbat/BOSL2 - Screw head pockets are disabled by default when angle>0. To force enable pockets, override the -1/auto value for *_mount_hole_type, ex: "fan_B_mount_hole_type = through; //-1;" would enable pockets for the fan_B flange, and change the hole dimension from being smaller than nominal (for thread-forming) to being larger than nominal (for pass-through).
 angle = 0;
@@ -53,7 +49,7 @@ default_flange_thickness = 2;
 minimum_screw_flange_thickness = 2;
 
 // tunnel length: -1=auto  Distance between the two flanges, not including the flanges themselves. Default is whatever distance creates a 45 degree cone/funnel between the given fan sizes. For angled adapter, it's the arc length through the center of the bent tube, and may be longer depending on the angle between the flanges, but the minimum arc length is the same as the straght adapter, so that at very shallow angles, the flanges do not come any closer than for a straight adapter. For straight adapter, this may shorten the tunnel to anywhere from default to 0. For angled adapter, this will not shorten less than auto, but may lengthen.
-tunnel_length = -1;
+tunnel_length = auto;
 
 // move the fan_A flange off-center - Only for straight adapters. (fan_B_size-fan_A_size)/2 makes the 2 flanges exactly flush on one side.
 xoffset = 0;
