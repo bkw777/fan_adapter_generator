@@ -3,6 +3,15 @@ OpenSCAD model to generate adapters between any 2 standard computer fan sizes.
 ![](fan_adapter_lgup.png)
 ![](fan_adapter_smup.png)
 
+![](3_demo_inside.webp)
+![](3_demo_outside.webp)
+![](angle_0_90.webp)
+![](pocket_diameter_inside_straight)
+![](pocket_diameter_outside_angled)
+![](one_side_20-140.webp)
+![](tunnel_length_straight.webp)
+![](tunnel_length_angled.webp)
+
 <!-- STL's for printing are in [releases](../../releases)  -->
 <!-- [thingiverse](https://www.thingiverse.com/thing:_____) -->
 

@@ -51,7 +51,7 @@ minimum_screw_flange_thickness = 2;
 // tunnel length: -1=auto  Distance between the two flanges, not including the flanges themselves. Default is whatever distance creates a 45 degree cone/funnel between the given fan sizes. For angled adapter, it's the arc length through the center of the bent tube, and may be longer depending on the angle between the flanges, but the minimum arc length is the same as the straght adapter, so that at very shallow angles, the flanges do not come any closer than for a straight adapter. For straight adapter, this may shorten the tunnel to anywhere from default to 0. For angled adapter, this will not shorten less than auto, but may lengthen.
 tunnel_length = auto;
 
-// move the fan_A flange off-center - Only for straight adapters. (fan_B_size-fan_A_size)/2 makes the 2 flanges exactly flush on one side.
+// move the fan_A flange off-center - Only for straight adapters. abs((fan_A_size-fan_B_size))/2 makes the 2 flanges exactly flush on one side.
 xoffset = 0;
 yoffset = 0;
 
