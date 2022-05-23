@@ -19,8 +19,8 @@ OpenSCAD model to generate adapters between any 2 standard computer fan sizes.
 All dimensions in mm.
 
 ### Required
-**small_fan_size**  
-**large_fan_size**  
+**fan_A_size**  
+**fan_B_size**  
 Any standard fan size from 20 to 250.  
 Or may also use any arbitrary size if you supply **\*\_screw_size** and **\*\_bolt_pattern**, and possibly adjust **cowling_thickness**.  
 This is the outside dimension of the entire fan frame body.
@@ -32,32 +32,32 @@ The rest of these settings have reasonable defaults or automatic values, and the
 Make an angled adapter with a bent tube between the two flanges. Requires [BOSL2](https://github.com/revarbat/BOSL2).  
 ```0-360``` The two flanges will be angled this many degrees.
 
-**small_bolt_pattern**  
-**large_bolt_pattern**  
+**fan_A_bolt_pattern**  
+**fan_B_bolt_pattern**  
 Override the bolt pattern spacing.  
 ```auto or -1``` Automatically determined from the fan size.
 
-**small_screw_size**  
-**large_screw_size**  
+**fan_A_screw_size**  
+**fan_B_screw_size**  
 Fastener size, ex: 4 for M4 screws, not the exact hole diameter. The actual hole diameter will be smaller or exact or larger, depending on **\*\_mount_hole_type** .  
 ```auto or -1``` Automatically determined from the fan size.  
 ```none or 0``` Do not make any screw holes.  
 
-**small_mount_hole_type**  
-**large_mount_hole_type**  
+**fan_A_mount_hole_type**  
+**fan_B_mount_hole_type**  
 How to interpret **\*\_screw_size** to get the actual hole diameter to drill.  
 ```thread or 1``` Holes will be smaller than **\*\_screw_size** so that the screw cuts threads into the material, and screw head pockets are disabled (just the narrow hole is drilled all the way through the part).  
 ```exact or 2``` Holes will be exactly **\*\_screw_size**. Not usually what you want. This is a way to manually override and specify an arbitrary size hole exactly.  
 ```through or 3``` Holes will be larger than **\*\_screw_size** so that the screw passes through the hole.
 
-**small_screw_pocket_diameter**  
-**large_screw_pocket_diameter**  
+**fan_A_screw_pocket_diameter**  
+**fan_B_screw_pocket_diameter**  
 Diameter of the pocket around the screw hole for the screw head. Ignored if \*\_mount_hole_type=thread .  
 ```auto or -1``` 2 x \*\_mount_hole_size  
 ```none or 0``` Disable screw head pockets.
 
-**small_flange_thickness**  
-**large_flange_thickness**  
+**fan_A_flange_thickness**  
+**fan_B_flange_thickness**  
 Thickness of material under screw head. Only affects holes that have a screw head pocket.  
 ```default or -2 or auto or -1``` Use **default_flange_thickness**
 
@@ -81,8 +81,8 @@ For angled adapter: The disatance is the arc length through the center of the be
 
 **xoffset**  
 **yoffset**  
-Move the small flange off-center.  
-Eample: ```xoffset=tl``` is a handy way to make both flanges flush on one side. (tl is the automatic calculated version of tunnel_length = (large_fan_size-small_fan_size)/2 )
+Move one flange off-center.  
+Eample: ```xoffset=abs(fan_A_size-fan_B_size)/2``` makes both flanges flush on one side.
 
 **fbp()**  
 Table of all recognized fan sizes and their assosciated bolt patterns.  
