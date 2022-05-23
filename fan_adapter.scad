@@ -266,15 +266,15 @@ if(angle<=0) {
   r = max(_r,al/(angle*(PI/180))); // radius needed to get desired arc length
   tb = max(def_tl/2,minimum_angled_flange_back_thickness); // flange back thickness
   union () {
-   flange(s=fan_B_size,d=0,t=fan_B_ft,b=fan_B_bp,m=fan_B_mhad,pt=fan_B_sft,pd=fan_B_pd,tb=tb); // fan_B flange
-   translate([r,0,fan_B_ft]) rotate([0,angle,0]) translate([-r,0,fan_A_ft]) rotate([180,0,0]) flange(s=fan_A_size,d=0,t=fan_A_ft,b=fan_A_bp,m=fan_A_mhad,pt=fan_A_sft,pd=fan_A_pd,tb=tb); // fan_A flange
-   translate([0,0,fan_B_ft]) bent_cone(a=angle,r=r,s1=fan_B_size,s2=fan_A_size,fn=fn,e=o); // bent cone OD
+   flange(s=fan_A_size,d=0,t=fan_A_ft,b=fan_A_bp,m=fan_A_mhad,pt=fan_A_sft,pd=fan_A_pd,tb=tb); // fan_A flange
+   translate([r,0,fan_A_ft]) rotate([0,angle,0]) translate([-r,0,fan_B_ft]) rotate([180,0,0]) flange(s=fan_B_size,d=0,t=fan_B_ft,b=fan_B_bp,m=fan_B_mhad,pt=fan_B_sft,pd=fan_B_pd,tb=tb); // fan_B flange
+   translate([0,0,fan_A_ft]) bent_cone(a=angle,r=r,s1=fan_A_size,s2=fan_B_size,fn=fn,e=o); // bent cone OD
   }
-  translate([0,0,fan_B_ft]) bent_cone(a=angle,r=r,s1=fan_B_id,s2=fan_A_id,fn=fn,e=max(fan_B_ft,fan_A_ft)+o); // bent cone ID
+  translate([0,0,fan_A_ft]) bent_cone(a=angle,r=r,s1=fan_A_id,s2=fan_B_id,fn=fn,e=max(fan_A_ft,fan_B_ft)+o); // bent cone ID
   // ugh.. for some combinations a little bit of the flange back pokes through the opposite flange face at shallow angles
   _tb = tb+1;
-  translate([r,0,fan_B_ft]) rotate([0,angle,0]) translate([-r,0,fan_A_ft+_tb/2-o/2]) cube([fan_A_size+1,fan_A_size+1,_tb],center=true);
-  translate([0,0,-_tb/2+o/2]) cube([fan_B_size+1,fan_B_size+1,_tb],center=true);
+  translate([0,0,-_tb/2+o/2]) cube([fan_A_size+1,fan_A_size+1,_tb],center=true);
+  translate([r,0,fan_A_ft]) rotate([0,angle,0]) translate([-r,0,fan_B_ft+_tb/2-o/2]) cube([fan_B_size+1,fan_B_size+1,_tb],center=true);
  }
 }
 
